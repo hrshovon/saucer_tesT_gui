@@ -1,0 +1,117 @@
+<html>
+
+<head>
+    <!-- Plotly.js -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+        .preview-textfield {
+            position: absolute;
+            top: 85px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+            color: rgb(247, 243, 243);
+            font-family: 'Amaranth', sans-serif;
+        }
+    </style>
+    <script src="js/jquery-3.7.1.min.js" charset="utf-8"></script>
+    <script src="js/plotly-2.35.2.min.js" charset="utf-8"></script>
+    <script src="js/gauge.min.js" charset="utf-8"></script>
+    <script src="js/bootstrap.js"></script>
+
+</head>
+
+<body background="resources/gradient.jpeg">
+    <!-- Plots go in blank <div> elements. 
+      You can size them in the plot layout,
+      or give the div a size as shown here.
+  -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="row">
+                    <div id="speed" style="margin-top: 50px;">
+                        <canvas id="speed-gauge" style="width:100%;"></canvas>
+                        <div id="speed-val" class="preview-textfield"></div>
+                    </div>
+    
+                </div>
+
+            </div>
+            <div class="col-sm-8">
+                <div class="text-center border border-dark">
+                    <img src="http://localhost:8000/bgr" class="rounded" style="margin-top:50px;" width="640px"
+                        height="480px" />
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="row">
+                    <div id="battery" style="margin-top: 50px;">
+                        <canvas id="battery-gauge" style="width:100%;"></canvas>
+                        <div id="battery-val" class="preview-textfield"></div>
+                    </div>
+    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function initGauge(canvaselmname, textelmname, opts, minVal, maxVal) {
+            var target = document.getElementById(canvaselmname); // your canvas element
+            var gauge = new Donut(target).setOptions(opts); // create sexy gauge!
+            gauge.setTextField(document.getElementById(textelmname));
+            gauge.maxValue = maxVal; // set max gauge value
+            gauge.setMinValue(minVal);  // Prefer setter over gauge.minValue = 0
+            gauge.animationSpeed = 32; // set animation speed (32 is default value)
+            gauge.set(minVal); // set actual value
+            return gauge;
+        }
+
+        var speedOpts = {
+            angle: 0.35, // The span of the gauge arc
+            lineWidth: 0.1, // The line thickness
+            radiusScale: 1, // Relative radius
+            pointer: {
+                length: 0.6, // // Relative to gauge radius
+                strokeWidth: 0.035, // The thickness
+                color: '#000000' // Fill color
+            },
+            limitMax: false,     // If false, max value increases automatically if value > maxValue
+            limitMin: false,     // If true, the min value of the gauge will be fixed
+            colorStart: '#6F6EA0',   // Colors
+            colorStop: '#C0C0DB',    // just experiment with them
+            strokeColor: '#EEEEEE',  // to see which ones work best for you
+            generateGradient: true,
+            highDpiSupport: true,     // High resolution support
+
+        };
+        gaugeSpeed = initGauge("speed-gauge","speed-val",speedOpts,0,3000);
+        var speedOpts = {
+            angle: 0.35, // The span of the gauge arc
+            lineWidth: 0.1, // The line thickness
+            radiusScale: 1, // Relative radius
+            pointer: {
+                length: 0.6, // // Relative to gauge radius
+                strokeWidth: 0.035, // The thickness
+                color: '#000000' // Fill color
+            },
+            limitMax: false,     // If false, max value increases automatically if value > maxValue
+            limitMin: false,     // If true, the min value of the gauge will be fixed
+            colorStart: '#6F6EA0',   // Colors
+            colorStop: '#C0C0DB',    // just experiment with them
+            strokeColor: '#EEEEEE',  // to see which ones work best for you
+            generateGradient: true,
+            highDpiSupport: true,     // High resolution support
+
+        };
+        gaugeBattery = initGauge("battery-gauge","battery-val",speedOpts,0,12);
+
+    </script>
+</body>
+
+</html>

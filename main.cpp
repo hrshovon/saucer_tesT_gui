@@ -15,8 +15,6 @@
 
 using MJPEGStreamer = nadjieb::MJPEGStreamer;
 
-bool exitProgram = false;
-
 void streamVideo()
 {
     cv::VideoCapture cap(0);
@@ -45,7 +43,6 @@ void streamVideo()
         cv::imencode(".jpg", op, buff_bgr, params);
         streamer.publish("/bgr", std::string(buff_bgr.begin(), buff_bgr.end()));
         usleep(1000);
-        if(exitProgram) break;
     }
     std::cout << "end of stream" << std::endl;
     streamer.stop();
@@ -61,7 +58,7 @@ void processData(saucer::smartview<saucer::serializers::glaze::serializer> *smar
     std::uniform_int_distribution<> distrVel(0, 3000);
     std::uniform_int_distribution<> distrBatt(0, 12);
     
-    while (!exitProgram)
+    while (true)
     {
         smartview->evaluate<void>("gaugeSpeed.set({})", saucer::make_args(distrVel(gen1))) | saucer::forget();
         smartview->evaluate<void>("gaugeBattery.set({})", saucer::make_args(distrBatt(gen2))) | saucer::forget();
@@ -97,6 +94,5 @@ int main()
 
 
     app->run(); // And finally enter the run-loop.
-    exitProgram = true;
     return 0;
 }

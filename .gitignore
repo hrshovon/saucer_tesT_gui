@@ -34,3 +34,6 @@
 #folders
 embedded/*
 build/*
+
+#files
+.saucer

@@ -3,6 +3,8 @@ RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 RUN apt update && apt install -y build-essential cmake gcc-14 g++-14 mesa-utils libwebkitgtk-6.0-dev libadwaita-1-dev git libopencv-dev wget curl
 ENV NVM_DIR=/usr/local/nvm
 ENV NODE_VERSION=16.20.2
+ENV CC=/usr/bin/gcc-14
+ENV CXX=/usr/bin/g++-14
 
 # install nvm
 # https://github.com/creationix/nvm#install-script

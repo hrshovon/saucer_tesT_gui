@@ -1,0 +1,2 @@
+#!/bin/bash
+xhost + && docker run -it --rm --gpus all --privileged --net=host --cap-add SYS_ADMIN --security-opt apparmor=unconfined --security-opt seccomp=unconfined -v /tmp/.X11-unix:/tmp/.X11-unix --device /dev/video0 -e DISPLAY=$DISPLAY -v $(pwd):/work saucerenv /bin/bash
